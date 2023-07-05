@@ -1,0 +1,579 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ */
+package Interfaces.Riesgos;
+
+import Clases.Activo;
+import Clases.GuardadoDatos;
+import GestionRiesgos.CategoriaAmenaza;
+import GestionRiesgos.Riesgo;
+import GestionRiesgos.Vulnerabilidades;
+import Interfaces.Inicio;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
+/**
+ *
+ * @author josue
+ */
+public class EditarRiesgo extends javax.swing.JFrame {
+    Riesgo riesgoEditado;
+    CategoriaAmenaza ca = new CategoriaAmenaza();
+    Activo activoSeleccionado;
+    /**
+     * Creates new form EditarRiesgo
+     */
+    public EditarRiesgo() {
+        initComponents();
+        actualizarTablas();
+        
+    }
+
+    private void actualizarTablas(){
+        //tablaRiesgosExistentes
+        DefaultTableModel modeloTabla = new DefaultTableModel();
+        
+        ArrayList<Object> columnasModel = new ArrayList<Object>();
+        
+        //Agregar columnas
+        columnasModel.add("Nombre");
+        columnasModel.add("Amenaza");
+        
+        for(Object columna : columnasModel){
+            modeloTabla.addColumn(columna);
+        }
+        
+        
+        //Recuperas riesgos
+        List<Riesgo> riesgosGuardados = GuardadoDatos.getRiesgos();
+        
+        ArrayList<List<String>> riesgosParaMostrar = new ArrayList<List<String>>(); 
+        
+        /*String nombreActivo, TipoDeActivo tipoActivo, Tag tagActivo, ValoracionCorta disponibilidad, ValoracionCorta integridad, ValoracionLarga confidencialidad*/
+        
+        for(Riesgo riesgo : riesgosGuardados){
+            List<String> nuevo = new ArrayList<String>();
+            
+            columnasModel.add("Nombre");
+            columnasModel.add("Amenaza");
+        
+        
+            nuevo.add(riesgo.getNombre());
+            nuevo.add(riesgo.getCategoriaAmenaza().getAmenaza());
+            
+            riesgosParaMostrar.add(nuevo);
+        }
+        
+        for(List<String> lista : riesgosParaMostrar){
+            Object[] ingreso = lista.toArray();
+            
+           modeloTabla.addRow(ingreso);
+        }
+        
+        this.tablaRiesgosExistentes.setModel(modeloTabla);
+        tablaRiesgosExistentes.setAutoCreateRowSorter(true);
+        
+        
+        //Para cargar activos
+        DefaultTableModel modeloTablaActivos = new DefaultTableModel();
+        
+        ArrayList<Object> columnasModelActivos = new ArrayList<Object>();
+        
+        columnasModelActivos.add("Nombre");
+        columnasModelActivos.add("Código Activo");
+        
+        for(Object columna : columnasModelActivos){
+            modeloTablaActivos.addColumn(columna);
+        }
+        
+        
+        
+        List<Activo> activosGuardados = GuardadoDatos.getActivos();
+        
+        ArrayList<List<String>> activosParaMostrar = new ArrayList<List<String>>(); 
+        
+        /*String nombreActivo, TipoDeActivo tipoActivo, Tag tagActivo, ValoracionCorta disponibilidad, ValoracionCorta integridad, ValoracionLarga confidencialidad*/
+        
+        for(Activo activo : activosGuardados){
+            List<String> nuevo = new ArrayList<String>();
+            nuevo.add(activo.getNombreActivo());
+            nuevo.add(activo.getCodigoActivo());
+            
+            
+            activosParaMostrar.add(nuevo);
+        }
+        
+        for(List<String> lista : activosParaMostrar){
+            Object[] ingreso = lista.toArray();
+            
+           modeloTablaActivos.addRow(ingreso);
+        }
+        
+        this.tablaActivos.setModel(modeloTablaActivos);
+        tablaActivos.setAutoCreateRowSorter(true);
+        
+        //Setear combo box
+        for(String categoria : ca.getCategorias()) {
+            comboCategoriaAmenaza.addItem(categoria);
+        }
+        comboCategoriaAmenaza.setSelectedItem("DESASTRES_NATURALES");
+        //Setear amenaza según categoría de amenaza seleccionada
+        
+        //Setear las vulnerabildiades
+        this.comboVulnerabilidad.setModel(new DefaultComboBoxModel(Vulnerabilidades.values()));
+        
+        //Setea el impacto
+        comboImpacto.addItem("Directo");
+        comboImpacto.addItem("Indirecto");
+        
+        //Posibilidad de ocurrir
+        comboPosibilidadOcurrir.addItem("1");
+        comboPosibilidadOcurrir.addItem("2");
+        comboPosibilidadOcurrir.addItem("3");
+        comboPosibilidadOcurrir.addItem("4");
+        comboPosibilidadOcurrir.addItem("5");
+        comboPosibilidadOcurrir.addItem("6");
+        comboPosibilidadOcurrir.addItem("7");
+    }
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        jPanel1 = new javax.swing.JPanel();
+        btnRegresar = new javax.swing.JButton();
+        labelTitulo1 = new javax.swing.JLabel();
+        labelTitulo = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tablaRiesgosExistentes = new javax.swing.JTable();
+        btnSeleccionar = new javax.swing.JButton();
+        btnGuardar = new javax.swing.JButton();
+        btnCancelar = new javax.swing.JButton();
+        txtNombre = new javax.swing.JTextField();
+        labelText = new javax.swing.JLabel();
+        txtDescripcion = new javax.swing.JTextField();
+        labelText1 = new javax.swing.JLabel();
+        labelTag1 = new javax.swing.JLabel();
+        comboCategoriaAmenaza = new javax.swing.JComboBox<>();
+        comboAmenaza = new javax.swing.JComboBox<>();
+        labelTag2 = new javax.swing.JLabel();
+        comboVulnerabilidad = new javax.swing.JComboBox<>();
+        labelTag3 = new javax.swing.JLabel();
+        spinnerNivelAceptacionRiesgo = new javax.swing.JSpinner();
+        labelTag4 = new javax.swing.JLabel();
+        labelTag5 = new javax.swing.JLabel();
+        comboImpacto = new javax.swing.JComboBox<>();
+        labelTag6 = new javax.swing.JLabel();
+        labelTag7 = new javax.swing.JLabel();
+        comboPosibilidadOcurrir = new javax.swing.JComboBox<>();
+        labelTitulo2 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tablaActivos = new javax.swing.JTable();
+        btnSeleccionarActivo = new javax.swing.JButton();
+        spinnerNivelRiesgo = new javax.swing.JSpinner();
+        labelTag8 = new javax.swing.JLabel();
+        txtActivo = new javax.swing.JTextField();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMinimumSize(new java.awt.Dimension(855, 642));
+        setSize(new java.awt.Dimension(855, 642));
+
+        jPanel1.setBackground(new java.awt.Color(189, 221, 211));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        btnRegresar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/atras.png"))); // NOI18N
+        btnRegresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegresarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnRegresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 6, 46, -1));
+
+        labelTitulo1.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        labelTitulo1.setText("Editar Riesgo");
+        jPanel1.add(labelTitulo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 30, -1, 24));
+
+        labelTitulo.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        labelTitulo.setText("Existentes");
+        jPanel1.add(labelTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(607, 30, -1, 24));
+
+        tablaRiesgosExistentes.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2"
+            }
+        ));
+        tablaRiesgosExistentes.setMinimumSize(new java.awt.Dimension(921, 565));
+        tablaRiesgosExistentes.setPreferredSize(new java.awt.Dimension(921, 565));
+        jScrollPane1.setViewportView(tablaRiesgosExistentes);
+
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(522, 88, 300, 350));
+
+        btnSeleccionar.setText("Seleccionar");
+        btnSeleccionar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSeleccionarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnSeleccionar, new org.netbeans.lib.awtextra.AbsoluteConstraints(638, 444, 100, 30));
+
+        btnGuardar.setText("GUARDAR");
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(695, 555, 100, 40));
+
+        btnCancelar.setText("CANCELAR");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(537, 555, 100, 40));
+        jPanel1.add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(239, 66, 250, -1));
+
+        labelText.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        labelText.setText("Nombre:");
+        jPanel1.add(labelText, new org.netbeans.lib.awtextra.AbsoluteConstraints(149, 66, -1, -1));
+        jPanel1.add(txtDescripcion, new org.netbeans.lib.awtextra.AbsoluteConstraints(239, 102, 250, -1));
+
+        labelText1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        labelText1.setText("Descripción:");
+        jPanel1.add(labelText1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 102, -1, -1));
+
+        labelTag1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        labelTag1.setText("Categoría Amenaza:");
+        jPanel1.add(labelTag1, new org.netbeans.lib.awtextra.AbsoluteConstraints(64, 138, -1, -1));
+
+        comboCategoriaAmenaza.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                comboCategoriaAmenazaItemStateChanged(evt);
+            }
+        });
+        jPanel1.add(comboCategoriaAmenaza, new org.netbeans.lib.awtextra.AbsoluteConstraints(239, 138, 246, -1));
+
+        jPanel1.add(comboAmenaza, new org.netbeans.lib.awtextra.AbsoluteConstraints(239, 192, 246, -1));
+
+        labelTag2.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        labelTag2.setText("Amenaza:");
+        jPanel1.add(labelTag2, new org.netbeans.lib.awtextra.AbsoluteConstraints(136, 192, -1, -1));
+
+        jPanel1.add(comboVulnerabilidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(239, 244, 246, -1));
+
+        labelTag3.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        labelTag3.setText("Vulnerabilidad:");
+        jPanel1.add(labelTag3, new org.netbeans.lib.awtextra.AbsoluteConstraints(97, 244, -1, -1));
+        jPanel1.add(spinnerNivelAceptacionRiesgo, new org.netbeans.lib.awtextra.AbsoluteConstraints(239, 297, 65, -1));
+
+        labelTag4.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        labelTag4.setText("Nivel Aceptación Del Riesgo:");
+        jPanel1.add(labelTag4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 300, -1, -1));
+
+        labelTag5.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        labelTag5.setText("Nivel Del Riesgo:");
+        jPanel1.add(labelTag5, new org.netbeans.lib.awtextra.AbsoluteConstraints(82, 344, -1, -1));
+
+        jPanel1.add(comboImpacto, new org.netbeans.lib.awtextra.AbsoluteConstraints(239, 385, 246, -1));
+
+        labelTag6.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        labelTag6.setText("Impacto:");
+        jPanel1.add(labelTag6, new org.netbeans.lib.awtextra.AbsoluteConstraints(143, 385, -1, -1));
+
+        labelTag7.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        labelTag7.setText("Posibilidad De Ocurrir:");
+        jPanel1.add(labelTag7, new org.netbeans.lib.awtextra.AbsoluteConstraints(44, 429, -1, -1));
+
+        jPanel1.add(comboPosibilidadOcurrir, new org.netbeans.lib.awtextra.AbsoluteConstraints(239, 429, 246, -1));
+
+        labelTitulo2.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        labelTitulo2.setText("Selecciona Activo");
+        jPanel1.add(labelTitulo2, new org.netbeans.lib.awtextra.AbsoluteConstraints(187, 516, -1, 24));
+
+        tablaActivos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2"
+            }
+        ));
+        tablaActivos.setMinimumSize(new java.awt.Dimension(921, 565));
+        tablaActivos.setPreferredSize(new java.awt.Dimension(921, 565));
+        jScrollPane2.setViewportView(tablaActivos);
+
+        jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(156, 552, 271, 84));
+
+        btnSeleccionarActivo.setText("SELECCIONAR");
+        btnSeleccionarActivo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSeleccionarActivoActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnSeleccionarActivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(27, 564, -1, -1));
+        jPanel1.add(spinnerNivelRiesgo, new org.netbeans.lib.awtextra.AbsoluteConstraints(239, 341, 65, -1));
+
+        labelTag8.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        labelTag8.setText("Activo:");
+        jPanel1.add(labelTag8, new org.netbeans.lib.awtextra.AbsoluteConstraints(154, 485, -1, -1));
+
+        txtActivo.setEditable(false);
+        jPanel1.add(txtActivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(239, 480, 250, -1));
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 860, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 640, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
+        Inicio inicio = new Inicio();
+
+        inicio.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnRegresarActionPerformed
+
+    private void btnSeleccionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionarActionPerformed
+
+        if(this.tablaRiesgosExistentes.getSelectedRow() > -1){
+            String nombreRiesgo;
+            DefaultTableModel tm = (DefaultTableModel) tablaRiesgosExistentes.getModel();
+            nombreRiesgo = (String) tm.getValueAt(tablaRiesgosExistentes.getSelectedRow(),0);
+
+            riesgoEditado = GuardadoDatos.buscarRiesgoPorNombre(nombreRiesgo);
+
+            
+            System.out.println("Riesgo encontrado: "+ riesgoEditado.toString());
+
+
+            txtNombre.setText(riesgoEditado.getNombre());
+            txtDescripcion.setText(riesgoEditado.getDescripcion());
+            
+            //Posible error
+            comboCategoriaAmenaza.setSelectedItem(riesgoEditado.getCategoriaAmenaza().getCategoriaAmenaza());
+            
+            //x2
+            comboAmenaza.setSelectedItem(riesgoEditado.getCategoriaAmenaza().getAmenaza());
+            
+            comboVulnerabilidad.setSelectedItem(riesgoEditado.getVulnerabilidad());
+            //x3
+            spinnerNivelAceptacionRiesgo.setValue(riesgoEditado.getNivelAceptableDeRiesgo());
+            spinnerNivelRiesgo.setValue(riesgoEditado.getNivelDeRiesgo());
+            
+            comboImpacto.setSelectedItem(riesgoEditado.getImpacto());
+            
+            comboPosibilidadOcurrir.setSelectedIndex(riesgoEditado.getPosibilidadDeOCurrir()-1);
+            
+            txtActivo.setText(riesgoEditado.getActivoEnRiesgo().getNombreActivo());
+            
+            
+            
+        }
+
+    }//GEN-LAST:event_btnSeleccionarActionPerformed
+
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        //Si el nombre está vacío
+        if(!txtNombre.getText().isEmpty() && !txtDescripcion.getText().isEmpty() && !txtNombre.getText().isBlank() && !txtDescripcion.getText().isBlank()){
+            if(Integer.parseInt(spinnerNivelAceptacionRiesgo.getValue().toString()) >= 0 && Integer.parseInt(spinnerNivelAceptacionRiesgo.getValue().toString()) <= 10 ){
+                //Si el nivel de riesgo no está en el rango de 0-10
+                if(Integer.parseInt(spinnerNivelRiesgo.getValue().toString()) >= 0 && Integer.parseInt(spinnerNivelAceptacionRiesgo.getValue().toString()) <= 10 ){
+                    //Validar si se ha seleccionado un activo
+                    if(riesgoEditado != null){
+                        //String nombreAnterior = this.riesgoEditado.getNombre();
+                        //nombreActivo
+                        this.riesgoEditado.setNombre(this.txtNombre.getText());
+
+                        this.riesgoEditado.setDescripcion(this.txtDescripcion.getText());
+                        this.riesgoEditado.getCategoriaAmenaza().setCategoriaAmenaza(this.comboCategoriaAmenaza.getSelectedItem().toString());
+                        this.riesgoEditado.getCategoriaAmenaza().setAmenaza(this.comboAmenaza.getSelectedItem().toString());
+                        this.riesgoEditado.setVulnerabilidad(Vulnerabilidades.valueOf(this.comboVulnerabilidad.getSelectedItem().toString()));
+                        this.riesgoEditado.setNivelAceptableDeRiesgo(Integer.parseInt(this.spinnerNivelAceptacionRiesgo.getValue().toString()));
+                        this.riesgoEditado.setNivelDeRiesgo(Integer.parseInt(this.spinnerNivelRiesgo.getValue().toString()));
+                        this.riesgoEditado.setImpacto(this.comboImpacto.getSelectedItem().toString());
+                        this.riesgoEditado.setPosibilidadDeOCurrir(Integer.parseInt(this.comboPosibilidadOcurrir.getSelectedItem().toString()));
+                        
+                        //Comprobar si el activo en riesgo ha sido seleccionado
+                        
+                        if(activoSeleccionado != null){
+                            //Si ha sido seleccionado
+                            this.riesgoEditado.setActivoEnRiesgo(activoSeleccionado);
+                        }else{
+                            //Si no ha sido seleccionado ponemos elque tenía orginalmente
+                            this.riesgoEditado.setActivoEnRiesgo(riesgoEditado.getActivoEnRiesgo());
+                        }
+                        
+
+                        //Buscamos el original
+                        //System.out.println("Nombre Anterior: "+nombreAnterior);
+                        Riesgo riesgoCambiado = GuardadoDatos.buscarRiesgoPorNombre(riesgoEditado.getNombre());
+                        //Guardamos el riesgo modificado
+                        //System.out.println("Riesgo: "+riesgoACambiar.toString());
+
+                        if(riesgoCambiado != null){
+                            String mensaje = "Riesgo modificado Correctamente: Nombre:"+riesgoCambiado.getNombre();
+                            JOptionPane.showMessageDialog(null, mensaje);
+                            actualizarTablas();
+                        }else{
+                            JOptionPane.showMessageDialog(null, "No se modificó el riesgo correctamente");
+                        }
+
+                        //Cerrar ventana
+                        Inicio inicio = new Inicio();
+
+                        inicio.setVisible(true);
+                        this.dispose();
+                    }else{
+                        JOptionPane.showMessageDialog(null, "Debes seleccionar un riesgo");
+                    }
+                }else{
+                    JOptionPane.showMessageDialog(null, "El nivel de riesgo debe ser entre 0 y 10");
+                }
+            }else{
+               JOptionPane.showMessageDialog(null, "El nivel de riesgo aceptado debe ser entre 0 y 10");
+            }
+        }else{
+            JOptionPane.showMessageDialog(null, "Debes ingresar un nombre y una descripción de riesgo.");
+        }
+        
+        
+        
+    }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        Inicio inicio = new Inicio();
+
+        inicio.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void comboCategoriaAmenazaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_comboCategoriaAmenazaItemStateChanged
+        if(comboCategoriaAmenaza.getSelectedItem() != null){
+            comboAmenaza.removeAllItems();
+            String categoriaAmenaza = comboCategoriaAmenaza.getSelectedItem().toString();
+
+            for(String amenaza : ca.devolverAmenazasSegunCategoria(categoriaAmenaza)) {
+
+                comboAmenaza.addItem(amenaza);
+            }
+        }
+    }//GEN-LAST:event_comboCategoriaAmenazaItemStateChanged
+
+    private void btnSeleccionarActivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionarActivoActionPerformed
+
+        if(this.tablaActivos.getSelectedRow() > -1){
+            DefaultTableModel tm = (DefaultTableModel) tablaActivos.getModel();
+            String codigo = (String) tm.getValueAt(tablaActivos.getSelectedRow(),1);
+
+            activoSeleccionado = GuardadoDatos.buscarActivoPorCodigo(codigo);
+
+            System.out.println("Activo encontrado: "+ activoSeleccionado.toString());
+
+            System.out.println("Codigo seleccionado: "+codigo);
+
+            if(activoSeleccionado != null){
+                JOptionPane.showMessageDialog(null, "El activo se seleccionó correctamente");
+            }else{
+                JOptionPane.showMessageDialog(null, "No se pudo seleccionar el activo, algo falló...");
+            }
+
+        }
+
+    }//GEN-LAST:event_btnSeleccionarActivoActionPerformed
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(EditarRiesgo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(EditarRiesgo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(EditarRiesgo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(EditarRiesgo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new EditarRiesgo().setVisible(true);
+            }
+        });
+    }
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCancelar;
+    private javax.swing.JButton btnGuardar;
+    private javax.swing.JButton btnRegresar;
+    private javax.swing.JButton btnSeleccionar;
+    private javax.swing.JButton btnSeleccionarActivo;
+    private javax.swing.JComboBox<String> comboAmenaza;
+    private javax.swing.JComboBox<String> comboCategoriaAmenaza;
+    private javax.swing.JComboBox<String> comboImpacto;
+    private javax.swing.JComboBox<String> comboPosibilidadOcurrir;
+    private javax.swing.JComboBox<String> comboVulnerabilidad;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JLabel labelTag1;
+    private javax.swing.JLabel labelTag2;
+    private javax.swing.JLabel labelTag3;
+    private javax.swing.JLabel labelTag4;
+    private javax.swing.JLabel labelTag5;
+    private javax.swing.JLabel labelTag6;
+    private javax.swing.JLabel labelTag7;
+    private javax.swing.JLabel labelTag8;
+    private javax.swing.JLabel labelText;
+    private javax.swing.JLabel labelText1;
+    private javax.swing.JLabel labelTitulo;
+    private javax.swing.JLabel labelTitulo1;
+    private javax.swing.JLabel labelTitulo2;
+    private javax.swing.JSpinner spinnerNivelAceptacionRiesgo;
+    private javax.swing.JSpinner spinnerNivelRiesgo;
+    private javax.swing.JTable tablaActivos;
+    private javax.swing.JTable tablaRiesgosExistentes;
+    private javax.swing.JTextField txtActivo;
+    private javax.swing.JTextField txtDescripcion;
+    private javax.swing.JTextField txtNombre;
+    // End of variables declaration//GEN-END:variables
+}
